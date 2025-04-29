@@ -10,9 +10,16 @@
 }
 
 .active-link {
-  border-bottom: 2px solid white;
+  border: 2px solid white;
 }
+
 img {
-  height: 40px; /* adjust as needed */
+  height: 40px;
   margin-left: 10px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.mat-toolbar {
+  background-color: lightgray;;
 }
