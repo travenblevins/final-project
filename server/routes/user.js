@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import verifyToken from "../middleware/verifyToken.js";
+import User from "../models/User.js";
+
 const router = express.Router();
-const verifyToken = require("../middleware/verifyToken");
-const User = require("../models/User");
 
 router.use(verifyToken);
 
@@ -35,4 +36,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
