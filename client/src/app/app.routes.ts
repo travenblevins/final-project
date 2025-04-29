@@ -3,8 +3,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SearchMovieComponent } from './components/search-movie/search-movie.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 
-import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { BlankLayoutComponent } from './layouts/blank-layout.component';
+import { MainLayoutComponent } from './layouts/main-layout.component';
 
 
 export const routes: Routes = [
