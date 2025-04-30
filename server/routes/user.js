@@ -20,20 +20,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ POST /api/user – Create or update user by Firebase UID
-router.post("/", async (req, res) => {
-  const { name, email } = req.body;
-
-  try {
-    const updated = await User.findOneAndUpdate(
-      { uid: req.user.uid },
-      { name, email, uid: req.user.uid },
-      { upsert: true, new: true }
-    );
-    res.json(updated);
-  } catch (err) {
-    res.status(500).send("Error saving user");
-  }
-});
-
 export default router;

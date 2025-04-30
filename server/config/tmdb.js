@@ -1,4 +1,3 @@
-// server/config/tmdb.js
 import axios from 'axios';
 
 const tmdb = axios.create({
@@ -10,4 +9,4 @@ const tmdb = axios.create({
   timeout: 5000                             // Optional: 5 second timeout
 });
 
-module.exports = tmdb;
+export default tmdb;

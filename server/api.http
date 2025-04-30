@@ -1,5 +1,5 @@
-# Get a token
-POST http://localhost:4000/api/auth/token
+# login
+POST http://localhost:4000/api/auth/login
 Content-Type: application/json
 
 {
@@ -7,21 +7,32 @@ Content-Type: application/json
   "password": "123456"
 }
 
+###
+
+# signup
+POST http://localhost:4000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "newuser@gmail.com",
+  "password": "password123"
+}
+
 ### 
 
 # Test the user route (GET)
 GET http://localhost:4000/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmOWEwNTBkYzRhZTgyOGMyODcxYzMyNTYzYzk5ZDUwMjc3ODRiZTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYWwtcHJvamVjdC1kYTY5MiIsImF1ZCI6ImZpbmFsLXByb2plY3QtZGE2OTIiLCJhdXRoX3RpbWUiOjE3NDU5NDI5NDcsInVzZXJfaWQiOiJUdnd6bFB4cE40UG53WFAzRm9sVmU4TWE5ZkczIiwic3ViIjoiVHZ3emxQeHBONFBud1hQM0ZvbFZlOE1hOWZHMyIsImlhdCI6MTc0NTk0Mjk0NywiZXhwIjoxNzQ1OTQ2NTQ3LCJlbWFpbCI6ImJvYkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYm9iQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.Chk0TPACjK4nPE2Yi8fRXnSTPIrVwLCil_VEQ6KVhTG2zWjY8ByWzfyX_ln7jAIqS8_yGvl0bfxbzUOXL4NnxWzbmrjcJuYfMhBjs6ij08NzQiWZGJjGRSiUR1eoFrLr13_LlVinHRFgd4OoxEuwkqP2zD6dmZKFOGcqmnuQu8oS2czwzuJCE580SBmS7m9VVRs-u5AEJQePRDR-mDmOeK174609afaiRUOz0IE_yORkaR3IBf8am0Qa4To3yEEOyItwwltqfWFAOvDarTVzWk-WYxvfk3-3zOgrsjUehfcK15j_Y7flWZ_E64x8D-PAJzNHZMX8WcPeeodh1094pg
+Authorization: Bearer
+
 
 ###
 
-# Test the user route (POST)
-POST http://localhost:4000/api/user
+# Get popular movies
+GET http://localhost:4000/api/movies/popular
 Content-Type: application/json
-Authorization: Bearer <paste_token_here>
 
-{
-  "name": "John Doe",
-  "email": "johndoe@example.com"
-}
+###
+# Get movie details
+GET http://localhost:4000/api/movies/movie/19995
+Content-Type: application/json
