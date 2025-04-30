@@ -1,0 +1,25 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.active-link {
+  border: 2px solid white;
+}
+
+img {
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.mat-toolbar {
+  background-color: lightgray;;
+}

@@ -1,0 +1,24 @@
+<mat-form-field appearance="outline" class="search-bar">
+  <mat-label>Search</mat-label>
+  <input matInput [(ngModel)]="searchText" placeholder="Type to search">
+</mat-form-field>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Search Results</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="searchText">
+        <h1>Text</h1>
+        <!-- <div *ngIf="results.length > 0; else noResults">
+        <ul>
+            <li *ngFor="let movie of results">
+            {{ movie.title }} ({{ movie.release_date | date: 'yyyy' }})
+            </li>
+        </ul>
+        </div> -->
+
+        
+        <!-- <ng-template #noResults>
+        <p>No results found for "{{ searchText }}"</p>
+        </ng-template> -->
+    </mat-card-content>
+</mat-card>
