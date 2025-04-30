@@ -1,5 +1,14 @@
-// Verify user
-const admin = require("../config/firebase");
+import admin from "firebase-admin";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const serviceAccount = require("../config/serviceAccountKey.json");
+
+// Initialize Firebase Admin
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split("Bearer ")[1];
@@ -15,4 +24,4 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-module.exports = verifyToken;
+export default verifyToken;

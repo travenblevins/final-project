@@ -1,27 +1,37 @@
-# Login
+# login
 POST http://localhost:4000/api/auth/login
 Content-Type: application/json
+
 {
   "email": "bob@gmail.com",
   "password": "123456"
 }
+
 ###
+
 # signup
 POST http://localhost:4000/api/auth/signup
 Content-Type: application/json
+
 {
   "email": "newuser@gmail.com",
   "password": "password123"
 }
-###
+
+### 
+
 # Test the user route (GET)
 GET http://localhost:4000/api/user
 Content-Type: application/json
 Authorization: Bearer
+
+
 ###
+
 # Get popular movies
 GET http://localhost:4000/api/movies/popular
 Content-Type: application/json
+
 ###
 # Get movie details
 GET http://localhost:4000/api/movies/movie/19995

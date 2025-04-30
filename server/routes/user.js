@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import verifyToken from "../middleware/verifyToken.js";
+import User from "../models/User.js";
+
 const router = express.Router();
-const verifyToken = require("../middleware/verifyToken");
-const User = require("../models/User");
 
 router.use(verifyToken);
 
@@ -19,20 +20,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ POST /api/user – Create or update user by Firebase UID
-router.post("/", async (req, res) => {
-  const { name, email } = req.body;
-
-  try {
-    const updated = await User.findOneAndUpdate(
-      { uid: req.user.uid },
-      { name, email, uid: req.user.uid },
-      { upsert: true, new: true }
-    );
-    res.json(updated);
-  } catch (err) {
-    res.status(500).send("Error saving user");
-  }
-});
-
-module.exports = router;
+export default router;
