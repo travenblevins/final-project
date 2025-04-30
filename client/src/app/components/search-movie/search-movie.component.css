@@ -1,0 +1,63 @@
+.search-movie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 500px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.search-results-card {
+    width: 100%;
+    max-width: 850px;
+    margin-bottom: 10px;
+}
+
+.search-results-card .card-body {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .search-results-card {
+        max-width: 95%;
+    }
+    
+    .search-bar {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .search-results-card {
+        max-width: 100%;
+    }
+}
+
+.movie-results-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.movie-results-card img {
+    max-width: 75px;
+    margin-right: 15px;
+    border-radius: 3px;
+}
+
+.movie-title {
+    display: flex;
+    align-items: center;
+}
