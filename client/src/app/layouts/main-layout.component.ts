@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TopnavComponent } from "../../components/topnav/topnav.component";
+import { TopnavComponent } from "../components/topnav/topnav.component";
 import { RouterOutlet } from '@angular/router';
 
 
