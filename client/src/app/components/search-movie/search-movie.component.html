@@ -1,33 +1,38 @@
-<mat-form-field appearance="outline" class="search-bar">
-  <mat-label>Search</mat-label>
-  <input matInput [(ngModel)]="searchText" placeholder="Type to search">
-</mat-form-field>
-<mat-card>
+<div class="search-movie-container">
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="searchText" placeholder="Type to search">
+    </mat-form-field>
+
+<mat-card class="search-results-card">
     <mat-card-header>
-        <mat-card-title>Search Results</mat-card-title>
+        <!-- Card Header title HERE -->
     </mat-card-header>
-    <mat-card-content *ngIf="searchText">
-        <!-- Dsiplay the top 10 most popular movies if searchText is blank -->
-
-        <!-- Each movie is going to have an id that when clicked will take the user to movie/id or the Movie component. There it will display all the movie info. -->
-
-        <!-- When searched. There will be displayed all the results below. Will display MOVIE TITLE, Movie IMG, and RUN TIME. -->
-
-
-
-
-
-        <!-- <div *ngIf="results.length > 0; else noResults">
-        <ul>
-            <li *ngFor="let movie of results">
-            {{ movie.title }} ({{ movie.release_date | date: 'yyyy' }})
-            </li>
-        </ul>
-        </div> -->
-
-        
-        <!-- <ng-template #noResults>
-        <p>No results found for "{{ searchText }}"</p>
-        </ng-template> -->
+    <mat-card-content>
+        <div class="movie-grid">
+            
+            <div *ngFor="let movie of movies" class="movie-results-card">
+                <span class="movie-title">
+                    <img [src]="movie.posterPath" alt="{{ movie.title }} poster">
+                    <h3>{{ movie.title }}</h3>
+                </span>
+                <p>Runtime: {{ movie.runtime }} minutes</p>
+            </div>
+            <!-- <div *ngIf="!searchText && popularMovies.length > 0">
+                <h3>Top 10 Most Popular Movies</h3>
+                <ul>
+                    <li *ngFor="let movie of popularMovies.slice(0, 10)">
+                        {{ movie.title }} ({{ movie.release_date | date: 'yyyy' }})
+                    </li>
+                </ul>
+            </div> -->
+            
+        </div>
     </mat-card-content>
 </mat-card>
+            <!-- Dsiplay the top 10 most popular movies if searchText is blank -->
+    
+            <!-- Each movie is going to have an id that when clicked will take the user to movie/id or the Movie component. There it will display all the movie info. -->
+    
+            <!-- When searched. There will be displayed all the results below. Will display MOVIE TITLE, Movie IMG, and RUN TIME. -->
+</div>
