@@ -28,11 +28,18 @@ Authorization: Bearer
 
 ###
 
-# Get popular movies
-GET http://localhost:4000/api/movies/popular
+# Get top-rated movies
+GET http://localhost:4000/api/movies/top-rated
 Content-Type: application/json
 
 ###
 # Get movie details
 GET http://localhost:4000/api/movies/movie/19995
 Content-Type: application/json
+
+###
+# Search for movies
+GET http://localhost:4000/api/movies/search?q=Avatar
+Content-Type: application/json
+
+
