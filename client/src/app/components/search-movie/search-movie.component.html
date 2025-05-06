@@ -1,38 +1,37 @@
 <div class="search-movie-container">
-    <mat-form-field appearance="outline" class="search-bar">
-      <mat-label>Search</mat-label>
-      <input matInput [(ngModel)]="searchText" placeholder="Type to search">
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearch()"
+      placeholder="Type to search"
+    />
+  </mat-form-field>
 
-<mat-card class="search-results-card">
+  <mat-card class="search-results-card">
     <mat-card-header>
-        <!-- Card Header title HERE -->
+      <mat-card-title>
+        {{ searchText ? 'Search Results' : 'Top Rated Movies' }}
+      </mat-card-title>
     </mat-card-header>
+
     <mat-card-content>
-        <div class="movie-grid">
-            
-            <div *ngFor="let movie of movies" class="movie-results-card">
-                <span class="movie-title">
-                    <img [src]="movie.posterPath" alt="{{ movie.title }} poster">
-                    <h3>{{ movie.title }}</h3>
-                </span>
-                <p>Runtime: {{ movie.runtime }} minutes</p>
-            </div>
-            <!-- <div *ngIf="!searchText && popularMovies.length > 0">
-                <h3>Top 10 Most Popular Movies</h3>
-                <ul>
-                    <li *ngFor="let movie of popularMovies.slice(0, 10)">
-                        {{ movie.title }} ({{ movie.release_date | date: 'yyyy' }})
-                    </li>
-                </ul>
-            </div> -->
-            
+      <div *ngIf="isLoading">Loading...</div>
+
+      <div *ngIf="!isLoading && movies?.length === 0">
+        <p>No movies found.</p>
+      </div>
+
+      <div class="movie-grid">
+        <div *ngFor="let movie of movies" class="movie-results-card">
+          <span class="movie-title">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }} poster" />            
+            <h3>{{ movie.title }}</h3>
+          </span>
+          <p>Runtime: {{ movie.runtime }} minutes</p>
         </div>
+      </div>
     </mat-card-content>
-</mat-card>
-            <!-- Dsiplay the top 10 most popular movies if searchText is blank -->
-    
-            <!-- Each movie is going to have an id that when clicked will take the user to movie/id or the Movie component. There it will display all the movie info. -->
-    
-            <!-- When searched. There will be displayed all the results below. Will display MOVIE TITLE, Movie IMG, and RUN TIME. -->
+  </mat-card>
 </div>

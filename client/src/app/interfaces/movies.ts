@@ -1,7 +1,9 @@
 export interface Movie {
   id: number;
   title: string;
-  posterPath: string;
-  runtime: number;
-  releaseDate: string;
+  overview?: string;
+  poster_path?: string;
+  release_date?: string;
+  vote_average?: number;
+  runtime?: number;
 }
