@@ -8,6 +8,7 @@ import admin from "firebase-admin"; // Import Firebase Admin
 import { createRequire } from "module"; // Import createRequire for dynamic JSON import
 import User from "./models/User.js"; // Import the User model
 import moviesRoutes from "./routes/movies.js"; // Import movies routes
+import userRoutes from "./routes/user.js";
 
 
 const require = createRequire(import.meta.url);
@@ -84,7 +85,6 @@ app.post("/api/auth/signup", async (req, res) => {
 
 
 // Routes
-import userRoutes from "./routes/user.js";
 app.use("/api/user", userRoutes);
 app.use("/api/movies", moviesRoutes);
 

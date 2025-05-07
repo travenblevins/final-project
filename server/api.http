@@ -23,7 +23,7 @@ Content-Type: application/json
 # Test the user route (GET)
 GET http://localhost:4000/api/user
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer 
 
 
 ###
@@ -41,5 +41,21 @@ Content-Type: application/json
 # Search for movies
 GET http://localhost:4000/api/movies/search?q=Avatar
 Content-Type: application/json
+
+###
+# Create or update an interaction
+POST http://localhost:4000/api/user/movies/interact
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5MWYxNWRlZTg0OTUzNjZjOTgyZTA1MTMzYmNhOGYyNDg5ZWFjNzIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYWwtcHJvamVjdC1kYTY5MiIsImF1ZCI6ImZpbmFsLXByb2plY3QtZGE2OTIiLCJhdXRoX3RpbWUiOjE3NDY2MzQ5NjAsInVzZXJfaWQiOiJUdnd6bFB4cE40UG53WFAzRm9sVmU4TWE5ZkczIiwic3ViIjoiVHZ3emxQeHBONFBud1hQM0ZvbFZlOE1hOWZHMyIsImlhdCI6MTc0NjYzNDk2MCwiZXhwIjoxNzQ2NjM4NTYwLCJlbWFpbCI6ImJvYkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYm9iQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.SVYmXGvub0IffFydSVx4J62_Vks4w5n1peCpNYYcgJfisTzHLd__HPRli7UvRGP35qAvl4O2aAjL-2ay0hGUsAd4roR05wN-T4i7nPqT5QfzpmQ3FwA_yE2ka5k21DPnnA7IxJZXORwuHdHxSHjv6Uw6JHiMFOaJr35_3PCFaI7TrIipaKWs-7bhhXqRgXk4V876hKpP8kJzculB25wUybcfbKvcELgQU6LTZlRZe4Nf_KnElPET6dhO0Y46PqSOUntBmVo4rdqpuVMdmNQQQoKIBdkDeYhYv1Ru3Q1LdEjn73H3_7YZE_S0_qdpiPLqwJMYAzln8zmcnI5-DXQNCQ
+
+{
+  "userId": "bob@gmail.com",
+  "movieId": "19995",
+  "rating": 8,
+  "comment": "Amazing visuals and story!",
+  "seen": true,
+  "interested": false
+}
+
 
 
