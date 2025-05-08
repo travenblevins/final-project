@@ -1,7 +1,7 @@
 import express from "express";
 import verifyToken from "../middleware/verifyToken.js";
 import User from "../models/User.js";
-import Interaction from "../models/Interaction.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -10,7 +10,8 @@ router.use(verifyToken);
 // Get a user
 router.get("/", async (req, res) => {
   try {
-    const user = await User.findOne({ uid: req.user.uid });
+    // Use the email from the decoded token (set by verifyToken middleware)
+    const user = await User.findOne({ email: req.user.email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -21,23 +22,79 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-// Create or update an interaction
-router.post("/movies/interact", async (req, res) => {
-  const { userId, movieId, rating, comment, seen, interested } = req.body;
+// Add a movie to the interested list
+router.post("/:userId/interested", async (req, res) => {
+  const { movieId, title, comment } = req.body;
+  console.log("Request body:", req.body);
+  console.log("User ID:", req.params.userId);
 
   try {
-    // Find and update the interaction, or create it if it doesn't exist
-    const interaction = await Interaction.findOneAndUpdate(
-      { userId, movieId }, // Query to find the interaction
-      { rating, comment, seen, interested }, // Fields to update
-      { upsert: true, new: true } // Create if not found, return the updated document
+    const result = await User.updateOne(
+      { _id: new mongoose.Types.ObjectId(req.params.userId), "interestedMovies.movieId": { $ne: movieId } },
+      {
+        $push: {
+          interestedMovies: { movieId, title, comment },
+        },
+      }
     );
+    console.log("Update result:", result);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error updating interestedMovies:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
-    res.json(interaction);
-  } catch (error) {
-    console.error("Error creating/updating interaction:", error.message);
-    res.status(500).json({ message: "Failed to create or update interaction" });
+// Add a movie to the seen list (and remove from interested)
+router.post("/:userId/seen", async (req, res) => {
+  const { movieId, title, rating, comment } = req.body;
+  try {
+    const result = await User.updateOne(
+      { _id: new mongoose.Types.ObjectId(req.params.userId) },
+      {
+        $pull: { interestedMovies: { movieId } },
+        $push: {
+          seenMovies: { movieId, title, rating, comment },
+        },
+      }
+    );
+    console.log("Update result:", result);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error updating seenMovies:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Remove a movie from the interested list
+router.delete("/:userId/interested", async (req, res) => {
+  const { movieId } = req.body;
+  try {
+    const result = await User.updateOne(
+      { _id: new mongoose.Types.ObjectId(req.params.userId) },
+      { $pull: { interestedMovies: { movieId } } }
+    );
+    console.log("Update result:", result);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error removing from interestedMovies:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Remove a movie from the seen list
+router.delete("/:userId/seen", async (req, res) => {
+  const { movieId } = req.body;
+  try {
+    const result = await User.updateOne(
+      { _id: new mongoose.Types.ObjectId(req.params.userId) },
+      { $pull: { seenMovies: { movieId } } }
+    );
+    console.log("Update result:", result);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error removing from seenMovies:", err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 

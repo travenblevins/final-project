@@ -1,10 +1,19 @@
-import mongoose from "mongoose";
+// models/User.js
+import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-    uid: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    displayName: { type: String, required: true },
+const movieSchema = new mongoose.Schema({
+    movieId: { type: String, required: true },
+    title: { type: String, required: true },
+    rating: { type: Number },
+    comment: { type: String },
+    timestamp: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model("User", userSchema);
-export default User;
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    seenMovies: [movieSchema],
+    interestedMovies: [movieSchema]
+});
+
+export default mongoose.model('User', userSchema);

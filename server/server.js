@@ -45,11 +45,11 @@ app.post("/api/auth/login", async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
 
     // Check if the user exists in MongoDB
-    const { uid, name } = decodedToken;
+    const { name } = decodedToken; // Removed uid
     const user = await User.findOneAndUpdate(
-      { uid },
-      { email, displayName: name || email.split("@")[0], uid },
-      { upsert: true, new: true }
+      { email }, // Use email as the unique identifier
+      { email, displayName: name || email.split("@")[0] }, // Update user details
+      { upsert: true, new: true } // Create if not found
     );
 
     res.json({ token, user });
@@ -69,11 +69,11 @@ app.post("/api/auth/signup", async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
 
     // Check if the user exists in MongoDB
-    const { uid, name } = decodedToken;
+    const { name } = decodedToken; // Remove uid from here
     const user = await User.findOneAndUpdate(
-      { uid },
-      { email, displayName: name || email.split("@")[0], uid },
-      { upsert: true, new: true }
+      { email }, // Use email as the unique identifier
+      { email, displayName: name || email.split("@")[0] }, // Update user details
+      { upsert: true, new: true } // Create if not found
     );
 
     res.json({ token, user });

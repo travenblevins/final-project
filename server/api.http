@@ -3,8 +3,8 @@ POST http://localhost:4000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "bob@gmail.com",
-  "password": "123456"
+  "email": "newuser1@gmail.com",
+  "password": "password123"
 }
 
 ###
@@ -14,13 +14,13 @@ POST http://localhost:4000/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "newuser@gmail.com",
-  "password": "password123"
+  "email": "",
+  "password": ""
 }
 
 ### 
 
-# Test the user route (GET)
+# Get a user
 GET http://localhost:4000/api/user
 Content-Type: application/json
 Authorization: Bearer 
@@ -43,19 +43,51 @@ GET http://localhost:4000/api/movies/search?q=Avatar
 Content-Type: application/json
 
 ###
-# Create or update an interaction
-POST http://localhost:4000/api/user/movies/interact
+# Add a movie to the interested list
+POST http://localhost:4000/api/user/681cc36b0cb3dca7e6b3b924/interested
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5MWYxNWRlZTg0OTUzNjZjOTgyZTA1MTMzYmNhOGYyNDg5ZWFjNzIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYWwtcHJvamVjdC1kYTY5MiIsImF1ZCI6ImZpbmFsLXByb2plY3QtZGE2OTIiLCJhdXRoX3RpbWUiOjE3NDY2MzQ5NjAsInVzZXJfaWQiOiJUdnd6bFB4cE40UG53WFAzRm9sVmU4TWE5ZkczIiwic3ViIjoiVHZ3emxQeHBONFBud1hQM0ZvbFZlOE1hOWZHMyIsImlhdCI6MTc0NjYzNDk2MCwiZXhwIjoxNzQ2NjM4NTYwLCJlbWFpbCI6ImJvYkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYm9iQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.SVYmXGvub0IffFydSVx4J62_Vks4w5n1peCpNYYcgJfisTzHLd__HPRli7UvRGP35qAvl4O2aAjL-2ay0hGUsAd4roR05wN-T4i7nPqT5QfzpmQ3FwA_yE2ka5k21DPnnA7IxJZXORwuHdHxSHjv6Uw6JHiMFOaJr35_3PCFaI7TrIipaKWs-7bhhXqRgXk4V876hKpP8kJzculB25wUybcfbKvcELgQU6LTZlRZe4Nf_KnElPET6dhO0Y46PqSOUntBmVo4rdqpuVMdmNQQQoKIBdkDeYhYv1Ru3Q1LdEjn73H3_7YZE_S0_qdpiPLqwJMYAzln8zmcnI5-DXQNCQ
+Authorization: Bearer 
 
 {
-  "userId": "bob@gmail.com",
-  "movieId": "19995",
-  "rating": 8,
-  "comment": "Amazing visuals and story!",
-  "seen": true,
-  "interested": false
+  "movieId": "",
+  "title": "Thunderbolts",
+  "comment": "Excited to watch this cool movie!"
 }
+
+###
+# Add a movie to the seen list (and remove from interested)
+POST http://localhost:4000/api/user/681cc36b0cb3dca7e6b3b924/seen
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "movieId": "19995",
+  "title": "Avatar",
+  "rating": 9,
+  "comment": "Amazing visuals and story!"
+}
+
+###
+# Remove a movie from the interested list
+DELETE http://localhost:4000/api/user/681cc36b0cb3dca7e6b3b924/interested
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "movieId": "986056"
+}
+
+###
+# Remove a movie from the seen list
+DELETE http://localhost:4000/api/user/681cc36b0cb3dca7e6b3b924/seen
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5MWYxNWRlZTg0OTUzNjZjOTgyZTA1MTMzYmNhOGYyNDg5ZWFjNzIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYWwtcHJvamVjdC1kYTY5MiIsImF1ZCI6ImZpbmFsLXByb2plY3QtZGE2OTIiLCJhdXRoX3RpbWUiOjE3NDY3MTkyNDEsInVzZXJfaWQiOiJKd2JsemRrT1NwUjUxQWVPMDB5UjRCdXd3RGkyIiwic3ViIjoiSndibHpka09TcFI1MUFlTzAweVI0QnV3d0RpMiIsImlhdCI6MTc0NjcxOTI0MSwiZXhwIjoxNzQ2NzIyODQxLCJlbWFpbCI6Im5ld3VzZXIxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJuZXd1c2VyMUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.otxr2T0TMWLcU9jauW6Ep9XFhoW8VEtL_lLyi8cADVnRXj1fmr0GuJxFfvmzdyUme-0J5x4P6use5BiumWlww6hbg652W1-S1XRHvjOBFqL4-NsEcrzeM6924d7K07F_2vO-IozzEqhtV3HdoeccbONhVAnOlTKgSnV51e-gGA1B-_gom75C20OKgKZbuYPweC1tPGVvjgxjQOKxLaQjTE3S5GWjddXA3th-V3E5niJOp2vei0C-4HCHO4RAK6Ugnibl1yrpCcQvHzwCc_RbcGaO9Q-w3qFq3k0Re-CP9_eIBYwpapmskladFVoMfYNjgkypXwvzXIY04H6oQdPBUg
+
+{
+  "movieId": "19995"
+}
+
+
 
 
 
