@@ -1,1 +1,8 @@
-<p>movie works!</p>
+<div class="movie-details-container">
+    <button mat-raised-button (click)="goBack()" class="back-button">Back</button>
+  <h1>{{ movieDetails.title }}</h1>
+  <img [src]="'https://image.tmdb.org/t/p/w500' + movieDetails.poster_path" alt="{{ movieDetails.title }} poster" />
+  <p>{{ movieDetails.overview }}</p>
+  <p>Runtime: {{ movieDetails.runtime }} minutes</p>
+  <p>Release Date: {{ movieDetails.release_date }}</p>
+</div>
