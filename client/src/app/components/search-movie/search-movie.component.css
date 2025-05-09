@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1900px;
   margin: 20px auto;
 }
 
@@ -15,9 +15,10 @@
 }
 
 .search-results-card {
-  width: 100%;
-  max-width: 850px;
+  width: 90%;
+  max-width: 1500px;
   margin-bottom: 10px;
+  background-color: lightgray;
 }
 
 .search-results-card .card-body {
@@ -27,7 +28,7 @@
 
 @media screen and (max-width: 768px) {
   .search-results-card {
-    max-width: 95%;
+    max-width: 90%;
   }
 
   .search-bar {
@@ -37,27 +38,28 @@
 
 @media screen and (max-width: 480px) {
   .search-results-card {
-    max-width: 100%;
+    max-width: 80;
   }
 }
 
-.movie-results-card {
+.movie-grid{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.movie-results-card {
+  flex: 1 1 250px;
+  min-width: 100px;
+  max-width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #5c5b5b;
   border-radius: 5px;
-  margin-bottom: 10px;
 }
 
 .movie-results-card img {
-  max-width: 150px;
-  margin-right: 15px;
+  width: 100%;
   border-radius: 3px;
 }
 
-.movie-title {
-  display: flex;
-  align-items: center;
-}

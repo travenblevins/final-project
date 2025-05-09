@@ -24,6 +24,10 @@ export class MovieService {
       .pipe(map((response) => response));
   }
 
+  getMovieDetails(movieId: string) {
+  return this.http.get<Movie>(`${this.apiUrl}/movie/${movieId}`);
+}
+
   handleError(error: any): void {
     console.error('An error occurred:', error);
   }

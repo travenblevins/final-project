@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MovieService } from '../../service/movie.service';
 import { Movie } from '../../interfaces/movies';
+import { RouterModule } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-search-movie',
@@ -16,9 +19,18 @@ import { Movie } from '../../interfaces/movies';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    RouterModule,
   ],
   templateUrl: './search-movie.component.html',
   styleUrl: './search-movie.component.css',
+  animations: [
+  trigger('fadeInItem', [
+    transition(':enter', [
+      style({ opacity: 0, transform: 'translateY(20px)' }),
+      animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+    ]),
+  ]),
+],
 })
 export class SearchMovieComponent implements OnInit {
   movies: Movie[] = [];
