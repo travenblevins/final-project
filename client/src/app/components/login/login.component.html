@@ -1,20 +1,8 @@
-<div class="login-container">
+<div class="login-form">
   <h2>Login</h2>
-  <mat-card class="login-card">
-    <form class="login-form">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" required>
-      </mat-form-field>
-
-      <button mat-raised-button color="primary">Login</button>
-    </form>
-    <!-- <input type="button" onclick="signInWithGoogle()" value="Sign in with Google" /> -->
-    <!-- Implement signin with google and other platforms here. This will be linked with FireBase via FireAuth -->
-  </mat-card>
+  <input [(ngModel)]="email" type="email" placeholder="Email" />
+  <input [(ngModel)]="password" type="password" placeholder="Password" />
+  <button (click)="login()">Login</button>
+  <button (click)="googleLogin()">Login with Google</button>
+  <p *ngIf="error" style="color:red">{{ error }}</p>
 </div>

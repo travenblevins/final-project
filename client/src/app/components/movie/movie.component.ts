@@ -3,6 +3,7 @@ import { Movie } from '../../interfaces/movies';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../service/movie.service';
 import { Location } from '@angular/common';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-movie',
@@ -17,6 +18,7 @@ export class MovieComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private movieService: MovieService,
+    private userService: UserService,
     private location: Location
   ) {}
 
@@ -39,5 +41,16 @@ export class MovieComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  // addtoInterestedList(): void {
+  //   this.userService.addToInterested(this.movieId).subscribe({
+  //     next: (response) => {
+  //       console.log('Added to interested:', response);
+  //     },
+  //     error: (err) => {
+  //       console.error('Error adding to interested:', err);
+  //     },
+  //   });
+  // }
 
 }

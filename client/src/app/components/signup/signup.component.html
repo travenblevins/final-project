@@ -1,0 +1,20 @@
+<mat-card>
+  <h2>Sign Up</h2>
+  <form (ngSubmit)="signup()" #signupForm="ngForm">
+    <mat-form-field class="full-width">
+      <input matInput type="email" placeholder="Email" [(ngModel)]="email" name="email" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Sign Up</button>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </form>
+</mat-card>
