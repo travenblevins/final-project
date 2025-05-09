@@ -5,6 +5,7 @@ import { MovieListComponent } from './components/movie-list/movie-list.component
 
 import { BlankLayoutComponent } from './layouts/blank-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout.component';
+import { MovieComponent } from './components/movie/movie.component';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
     children: [
       { path: 'search/movie', component: SearchMovieComponent },
       { path: 'movie/list', component: MovieListComponent },
+      { path: 'movie/:id', component: MovieComponent },
     ],
   },
   { path: '**', redirectTo: '' },

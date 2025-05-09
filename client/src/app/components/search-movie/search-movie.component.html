@@ -1,12 +1,7 @@
 <div class="search-movie-container">
   <mat-form-field appearance="outline" class="search-bar">
-    <mat-label>Search</mat-label>
-    <input
-      matInput
-      [(ngModel)]="searchText"
-      (ngModelChange)="onSearch()"
-      placeholder="Type to search"
-    />
+    <mat-label>Search a movie...</mat-label>
+    <input matInput [(ngModel)]="searchText" (ngModelChange)="onSearch()" placeholder="Type to search" />
   </mat-form-field>
 
   <mat-card class="search-results-card">
@@ -17,19 +12,16 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div *ngIf="isLoading">Loading...</div>
+      <!-- <div *ngIf="isLoading">Loading...</div> -->
 
       <div *ngIf="!isLoading && movies?.length === 0">
         <p>No movies found.</p>
       </div>
 
       <div class="movie-grid">
-        <div *ngFor="let movie of movies" class="movie-results-card">
-          <span class="movie-title">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }} poster" />            
+        <div *ngFor="let movie of movies" class="movie-results-card" [routerLink]="'/movie/' + movie.id" @fadeInItem>
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }} poster" />
             <h3>{{ movie.title }}</h3>
-          </span>
-          <p>Runtime: {{ movie.runtime }} minutes</p>
         </div>
       </div>
     </mat-card-content>
