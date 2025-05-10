@@ -1,32 +1,45 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Movie } from '../interfaces/movies';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieService {
-  private apiUrl = 'http://localhost:4000/api/movies';
+  private apiUrl = 'https://api.themoviedb.org/3';
+  private apiKey = environment.TMDB_API_KEY;
 
   constructor(private http: HttpClient) {}
 
-  getTopRatedMovies(): Observable<Movie[]> {
-    return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/top-rated`).pipe(
-      map((response) => response.results) // Extract the "results" array
-    );
-  }
-  searchMovies(query: string): Observable<any> {
-    return this.http
-      .get(`${this.apiUrl}/search`, {
-        params: { q: query },
-      })
-      .pipe(map((response) => response));
+  private getDefaultParams(): HttpParams {
+    return new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('language', 'en-US');
   }
 
-  getMovieDetails(movieId: string) {
-  return this.http.get<Movie>(`${this.apiUrl}/movie/${movieId}`);
-}
+  getTopRatedMovies(): Observable<Movie[]> {
+    return this.http
+      .get<{ results: Movie[] }>(`${this.apiUrl}/movie/top_rated`, {
+        params: this.getDefaultParams(),
+      })
+      .pipe(map((response) => response.results));
+  }
+
+  searchMovies(query: string): Observable<Movie[]> {
+    const params = this.getDefaultParams().set('query', query);
+
+    return this.http
+      .get<{ results: Movie[] }>(`${this.apiUrl}/search/movie`, { params })
+      .pipe(map((response) => response.results));
+  }
+
+  getMovieDetails(movieId: string): Observable<Movie> {
+    return this.http.get<Movie>(`${this.apiUrl}/movie/${movieId}`, {
+      params: this.getDefaultParams(),
+    });
+  }
 
   handleError(error: any): void {
     console.error('An error occurred:', error);

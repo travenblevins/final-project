@@ -44,23 +44,24 @@ export class SearchMovieComponent implements OnInit {
   }
 
   onSearch() {
-    if (!this.searchText.trim()) {
-      this.loadTopRatedMovies();
-      return;
-    }
-
-    this.isLoading = true;
-    this.movieService.searchMovies(this.searchText).subscribe({
-      next: (response: { results: Movie[] }) => {
-        this.movies = response.results;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.movieService.handleError(err);
-        this.isLoading = false;
-      },
-    });
+  if (!this.searchText.trim()) {
+    this.loadTopRatedMovies();
+    return;
   }
+
+  this.isLoading = true;
+  this.movieService.searchMovies(this.searchText).subscribe({
+    next: (movies: Movie[]) => {
+      this.movies = movies;
+      this.isLoading = false;
+    },
+    error: (err) => {
+      this.movieService.handleError(err);
+      this.isLoading = false;
+    },
+  });
+}
+
 
   loadTopRatedMovies() {
     this.isLoading = true;
