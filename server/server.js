@@ -1,15 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import connectDB from "./config/db.js";
 import { loginUser } from "./middleware/auth.js";
 import { signupUser } from "./middleware/auth.js";
 import admin from "firebase-admin"; // Import Firebase Admin
 import { createRequire } from "module"; // Import createRequire for dynamic JSON import
-import User from "./models/User.js"; // Import the User model
+import db from "./config/firebase.js"; // Import Firestore instance
 import moviesRoutes from "./routes/movies.js"; // Import movies routes
 import userRoutes from "./routes/user.js";
-
 
 const require = createRequire(import.meta.url);
 const serviceAccount = require("./config/serviceAccountKey.json"); // Dynamically load JSON
@@ -22,9 +20,6 @@ if (!admin.apps.length) {
     credential: admin.credential.cert(serviceAccount),
   });
 }
-
-// Connect to MongoDB
-connectDB();
 
 // Global middleware
 app.use(cors());
@@ -44,14 +39,27 @@ app.post("/api/auth/login", async (req, res) => {
     // Decode the token to get user details
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    // Check if the user exists in MongoDB
-    const { name } = decodedToken; // Removed uid
-    const user = await User.findOneAndUpdate(
-      { email }, // Use email as the unique identifier
-      { email, displayName: name || email.split("@")[0] }, // Update user details
-      { upsert: true, new: true } // Create if not found
-    );
+    // Check if the user exists in Firestore
+    const { name } = decodedToken;
+    const userRef = db.collection("users").doc(email);
+    const userDoc = await userRef.get();
 
+    if (!userDoc.exists) {
+      // Create a new user if not found
+      await userRef.set({
+        email,
+        displayName: name || email.split("@")[0],
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      // Update user details if already exists
+      await userRef.update({
+        displayName: name || email.split("@")[0],
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+
+    const user = (await userRef.get()).data(); // Fetch the updated user data
     res.json({ token, user });
   } catch (error) {
     console.error("Error during login:", error);
@@ -68,21 +76,33 @@ app.post("/api/auth/signup", async (req, res) => {
     // Decode the token to get user details
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    // Check if the user exists in MongoDB
-    const { name } = decodedToken; // Remove uid from here
-    const user = await User.findOneAndUpdate(
-      { email }, // Use email as the unique identifier
-      { email, displayName: name || email.split("@")[0] }, // Update user details
-      { upsert: true, new: true } // Create if not found
-    );
+    // Check if the user exists in Firestore
+    const { name } = decodedToken;
+    const userRef = db.collection("users").doc(email);
+    const userDoc = await userRef.get();
 
+    if (!userDoc.exists) {
+      // Create a new user if not found
+      await userRef.set({
+        email,
+        displayName: name || email.split("@")[0],
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      // Update user details if already exists
+      await userRef.update({
+        displayName: name || email.split("@")[0],
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+
+    const user = (await userRef.get()).data(); // Fetch the updated user data
     res.json({ token, user });
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: error.message });
   }
 });
-
 
 // Routes
 app.use("/api/user", userRoutes);
