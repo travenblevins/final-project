@@ -1,8 +1,24 @@
-<div class="movie-details-container">
-    <button mat-raised-button (click)="goBack()" class="back-button">Back</button>
-  <h1>{{ movieDetails.title }}</h1>
-  <img [src]="'https://image.tmdb.org/t/p/w500' + movieDetails.poster_path" alt="{{ movieDetails.title }} poster" />
-  <p>{{ movieDetails.overview }}</p>
-  <p>Runtime: {{ movieDetails.runtime }} minutes</p>
-  <p>Release Date: {{ movieDetails.release_date }}</p>
+<div *ngIf="movieDetails">
+  <h2>{{ movieDetails.title }}</h2>
+<img [src]="movieDetails.poster_path" alt="{{ movieDetails.title }}" />
+<p>Runtime: {{ movieDetails.runtime }} min</p>
 </div>
+
+<button (click)="toggleSeen()">
+  {{ seen ? 'Mark as Unseen' : 'Mark as Seen' }}
+</button>
+<button (click)="toggleInterested()">
+  {{ interested ? 'Not Interested' : 'Interested' }}
+</button>
+
+<label>
+  Rating:
+  <input type="number" [(ngModel)]="userRating" (change)="updateRating(userRating)" />
+</label>
+
+<label>
+  Comment:
+  <textarea [(ngModel)]="userComment" (blur)="updateComment(userComment)"></textarea>
+</label>
+
+<button (click)="goBack()">Back</button>
