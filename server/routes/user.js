@@ -122,5 +122,33 @@ router.delete("/:userId/seen/:movieId", async (req, res) => {
   }
 });
 
+// Get movies from both subcollections (interestedMovies and seenMovies)
+router.get("/:userId/movies", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const userRef = db.collection("users").doc(userId);
+
+    // Fetch interestedMovies
+    const interestedMoviesSnapshot = await userRef.collection("interestedMovies").get();
+    const interestedMovies = interestedMoviesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Fetch seenMovies
+    const seenMoviesSnapshot = await userRef.collection("seenMovies").get();
+    const seenMovies = seenMoviesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    res.status(200).json({ interestedMovies, seenMovies });
+  } catch (err) {
+    console.error("Error fetching movies:", err.message);
+    res.status(500).json({ error: "Failed to fetch movies" });
+  }
+});
+
 
 export default router;

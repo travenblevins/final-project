@@ -57,7 +57,7 @@ Authorization: Bearer
 # Add to seen movies
 POST http://localhost:4000/api/user/newuser1@gmail.com/seen
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU5MWYxNWRlZTg0OTUzNjZjOTgyZTA1MTMzYmNhOGYyNDg5ZWFjNzIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYWwtcHJvamVjdC1kYTY5MiIsImF1ZCI6ImZpbmFsLXByb2plY3QtZGE2OTIiLCJhdXRoX3RpbWUiOjE3NDY5MjQ5MTIsInVzZXJfaWQiOiJKd2JsemRrT1NwUjUxQWVPMDB5UjRCdXd3RGkyIiwic3ViIjoiSndibHpka09TcFI1MUFlTzAweVI0QnV3d0RpMiIsImlhdCI6MTc0NjkyNDkxMiwiZXhwIjoxNzQ2OTI4NTEyLCJlbWFpbCI6Im5ld3VzZXIxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJuZXd1c2VyMUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Keq2hfKH20Xmafur9Z6gc6lH_WOBwGwPqM_IB6EOONdsbZJ5P290AKDUETqormDANKyROGxUG3WNWik162jWGf9OYmQbGfUBzVXLm5CAWegDQNGsGClQr2arw_P49EYdwYWWise2LNGZzFduZ2H9ofzyKLO65FGt7iNURy-ez6NcpLgIzhteM9FgAsPxNfRVatHq1J6LocDUdE2jbA79FkHv8kYULR7KesU0HUMyFFfx-FoXaXS4gccuvdBCjXVM9jVf7rKJn7bOx8Rp86vAaUO5hYX7gtL8QvOj6BIrwiAvCuDYc7yHa0hxC560Q0MLCwcuPxqFqu6KbD4T6h6O7g
 
 {
   "movieId": "19995",
@@ -78,5 +78,9 @@ DELETE http://localhost:4000/api/user/newuser1@gmail.com/seen/19995
 Content-Type: application/json
 Authorization: Bearer 
 
-
+###
+# Get movies from both subcollections (interestedMovies and seenMovies)
+GET http://localhost:4000/api/user/newuser1@gmail.com/movies
+Content-Type: application/json
+Authorization: Bearer 
 

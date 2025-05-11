@@ -30,13 +30,14 @@ app.get("/", (req, res) => {
   res.send("Welcome to the API!");
 });
 
-// Login with Firebase ID token
+// Login
 app.post("/api/auth/login", async (req, res) => {
-  const { token } = req.body; // Receive Firebase ID token from the frontend
+  const { email, password } = req.body;
   try {
-    // Verify the Firebase ID token
+    const token = await loginUser(email, password);
+
+    // Decode the token to get user details
     const decodedToken = await admin.auth().verifyIdToken(token);
-    const { email, name } = decodedToken;
 
     // Check if the user exists in Firestore
     const { name } = decodedToken;
@@ -66,13 +67,14 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-// Signup (if you need a signup endpoint, similar to login)
+// Signup
 app.post("/api/auth/signup", async (req, res) => {
-  const { token } = req.body; // Receive Firebase ID token from the frontend
+  const { email, password } = req.body;
   try {
-    // Verify the Firebase ID token
+    const token = await signupUser(email, password);
+
+    // Decode the token to get user details
     const decodedToken = await admin.auth().verifyIdToken(token);
-    const { email, name } = decodedToken;
 
     // Check if the user exists in Firestore
     const { name } = decodedToken;

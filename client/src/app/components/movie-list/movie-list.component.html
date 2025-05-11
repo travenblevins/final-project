@@ -1,36 +1,30 @@
 <div class="movie-list-container">
-    <mat-card class="movie-list-card">
-        <div class="left-column">
-            <mat-card-header>
-                <h1>Already Watched Movies</h1>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="movie-grid">
-                    <div *ngFor="let movie of watchedMovies" class="movie-results-card">
-                        <span class="movie-title">
-                            <img [src]="movie.posterPath" alt="{{ movie.title }} poster">
-                            <h3>{{ movie.title }}</h3>
-                        </span>
-                        <p>Runtime: {{ movie.runtime }} minutes</p>
-                    </div>
-                </div>
-            </mat-card-content>
+  <mat-card class="movie-list-card">
+    <mat-card-header>
+      <h1>Interested Movies</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="movie-grid">
+        <div *ngFor="let movie of interestedMovies" class="movie-card">
+          <h3>{{ movie.title }}</h3>
+          <p>{{ movie.comment }}</p>
         </div>
-        <div class="right-column">
-            <mat-card-header>
-                <h1>Watch List Loads in</h1>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="movie-grid">
-                    <div *ngFor="let movie of watchedMovies" class="movie-results-card">
-                        <span class="movie-title">
-                            <img [src]="movie.posterPath" alt="{{ movie.title }} poster">
-                            <h3>{{ movie.title }}</h3>
-                        </span>
-                        <p>Runtime: {{ movie.runtime }} minutes</p>
-                    </div>
-                </div>
-            </mat-card-content>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="movie-list-card">
+    <mat-card-header>
+      <h1>Seen Movies</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="movie-grid">
+        <div *ngFor="let movie of seenMovies" class="movie-card">
+          <h3>{{ movie.title }}</h3>
+          <p>Rating: {{ movie.rating }}</p>
+          <p>{{ movie.comment }}</p>
         </div>
-    </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

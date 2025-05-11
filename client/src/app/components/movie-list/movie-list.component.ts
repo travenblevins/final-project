@@ -1,39 +1,34 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MovieService } from '../../service/movie.service';
 import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movie-list',
-  imports: [MatCardModule, CommonModule],
   templateUrl: './movie-list.component.html',
-  styleUrl: './movie-list.component.css',
+  styleUrls: ['./movie-list.component.css'],
+  imports: [MatCardModule, CommonModule]
 })
-export class MovieListComponent {
-  movies = [
-    {
-      id: 1,
-      title: 'Inception',
-      posterPath:
-        'https://image.tmdb.org/t/p/w200/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg',
-      runtime: 148,
-      releaseDate: '2010-07-16',
-    },
-    {
-      id: 2,
-      title: 'The Dark Knight',
-      posterPath:
-        'https://image.tmdb.org/t/p/w200/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
-      runtime: 152,
-      releaseDate: '2008-07-18',
-    },
-    {
-      id: 3,
-      title: 'Interstellar',
-      posterPath:
-        'https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
-      runtime: 169,
-      releaseDate: '2014-11-07',
-    },
-  ];
-  watchedMovies = this.movies;
+export class MovieListComponent implements OnInit {
+  interestedMovies: any[] = [];
+  seenMovies: any[] = [];
+  userId: string = 'newuser1@gmail.com'; // Replace with dynamic user ID if needed
+
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit(): void {
+    this.loadUserMovies();
+  }
+
+  loadUserMovies(): void {
+    this.movieService.getUserMovies(this.userId).subscribe({
+      next: (data) => {
+        this.interestedMovies = data.interestedMovies;
+        this.seenMovies = data.seenMovies;
+      },
+      error: (err) => {
+        console.error('Error fetching user movies:', err);
+      },
+    });
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, setDoc, getDoc, collection, collectionData, DocumentData } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 export interface MovieData {
   rating?: number;
@@ -13,7 +14,7 @@ export interface MovieData {
 
 @Injectable({ providedIn: 'root' })
 export class UserDataService {
-  constructor(private afs: Firestore, private auth: AuthService) {}
+  constructor(private afs: Firestore, private auth: AuthService) { }
 
   // Save or update movie data for the user
   saveMovieData(movieId: string, data: MovieData): Promise<void> {
@@ -21,7 +22,7 @@ export class UserDataService {
       try {
         const uid = await this.auth.getUserId();
         if (!uid) throw new Error('User not authenticated');
-        
+
         const docRef = doc(this.afs, `users/${uid}/movies/${movieId}`);
         await setDoc(docRef, { ...data, updated: new Date() }, { merge: true });
         resolve();
@@ -37,7 +38,7 @@ export class UserDataService {
       try {
         const uid = await this.auth.getUserId();
         if (!uid) throw new Error('User not authenticated');
-        
+
         const docRef = doc(this.afs, `users/${uid}/movies/${movieId}`);
         const snapshot = await getDoc(docRef);
         if (snapshot.exists()) {
