@@ -1,4 +1,14 @@
-const firebaseConfig = {
+import admin from "firebase-admin";
+import { createRequire } from "module";
+import dotenv from "dotenv";
+
+dotenv.config({ path: "../.env" }); // Load environment variables
+
+const require = createRequire(import.meta.url);
+const serviceAccount = require("./serviceAccountKey.json"); // Import Firebase Admin SDK credentials
+
+// Firebase client configuration
+export const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -7,14 +17,15 @@ const firebaseConfig = {
     appId: process.env.FIREBASE_APP_ID,
 };
 
-export default firebaseConfig;
+// Initialize Firebase Admin
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`, // Optional: For Realtime Database
+    });
+}
 
-export const initializeFirebase = async () => {
-    const { initializeApp } = await import("firebase/app");
-    const { getAnalytics } = await import("firebase/analytics");
+// Initialize Firestore
+const db = admin.firestore();
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-    return { app, analytics };
-};
+export default db;

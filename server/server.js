@@ -1,12 +1,11 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import connectDB from "./config/db.js";
 import { loginUser } from "./middleware/auth.js";
 import { signupUser } from "./middleware/auth.js";
 import admin from "firebase-admin"; // Import Firebase Admin
 import { createRequire } from "module"; // Import createRequire for dynamic JSON import
-import User from "./models/User.js"; // Import the User model
+import db from "./config/firebase.js"; // Import Firestore instance
 import moviesRoutes from "./routes/movies.js"; // Import movies routes
 import userRoutes from "./routes/user.js";
 
@@ -21,9 +20,6 @@ if (!admin.apps.length) {
     credential: admin.credential.cert(serviceAccount),
   });
 }
-
-// Connect to MongoDB
-connectDB();
 
 // Global middleware
 app.use(cors());
@@ -42,17 +38,28 @@ app.post("/api/auth/login", async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const { email, name } = decodedToken;
 
-    // Check if the user exists in MongoDB, or create a new user if not
-    const user = await User.findOneAndUpdate(
-      { email }, // Use email as the unique identifier
-      { email, displayName: name || email.split("@")[0] }, // Update user details
-      { upsert: true, new: true } // Create if not found
-    );
+    // Check if the user exists in Firestore
+    const { name } = decodedToken;
+    const userRef = db.collection("users").doc(email);
+    const userDoc = await userRef.get();
 
-    // Generate a backend session token (this is the token you use to keep the user logged in)
-    const sessionToken = generateSessionToken(user._id); // You should create a function for session token generation
+    if (!userDoc.exists) {
+      // Create a new user if not found
+      await userRef.set({
+        email,
+        displayName: name || email.split("@")[0],
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      // Update user details if already exists
+      await userRef.update({
+        displayName: name || email.split("@")[0],
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
 
-    res.json({ token: sessionToken, user }); // Send the session token back to the frontend
+    const user = (await userRef.get()).data(); // Fetch the updated user data
+    res.json({ token, user });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: error.message });
@@ -67,30 +74,33 @@ app.post("/api/auth/signup", async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const { email, name } = decodedToken;
 
-    // Check if the user exists in MongoDB, or create a new user if not
-    const user = await User.findOneAndUpdate(
-      { email }, // Use email as the unique identifier
-      { email, displayName: name || email.split("@")[0] }, // Update user details
-      { upsert: true, new: true } // Create if not found
-    );
+    // Check if the user exists in Firestore
+    const { name } = decodedToken;
+    const userRef = db.collection("users").doc(email);
+    const userDoc = await userRef.get();
 
-    // Generate a backend session token (you could create a JWT or similar token)
-    const sessionToken = generateSessionToken(user._id); // Generate session token
+    if (!userDoc.exists) {
+      // Create a new user if not found
+      await userRef.set({
+        email,
+        displayName: name || email.split("@")[0],
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      // Update user details if already exists
+      await userRef.update({
+        displayName: name || email.split("@")[0],
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
 
-    res.json({ token: sessionToken, user }); // Send the session token back to the frontend
+    const user = (await userRef.get()).data(); // Fetch the updated user data
+    res.json({ token, user });
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ message: error.message });
   }
 });
-
-// Function to generate a session token (you can use JWT or any other token generation logic)
-function generateSessionToken(userId) {
-  // Example using JWT (you should install 'jsonwebtoken' if you want to use JWT)
-  const jwt = require('jsonwebtoken');
-  const sessionToken = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' }); // Use a secret stored in your env
-  return sessionToken;
-}
 
 // Routes
 app.use("/api/user", userRoutes);
