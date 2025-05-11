@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export interface MovieData {
+  title?: string;
   rating?: number;
   comment?: string;
   seen?: boolean;
   interested?: boolean;
   updated?: Date;
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class UserDataService {
@@ -52,7 +54,6 @@ export class UserDataService {
     });
   }
 
-  // Get all movies for the user (returns Observable)
   getUserMovies(): Observable<any[]> {
     return new Observable((observer) => {
       this.auth.getUserId().then((uid) => {

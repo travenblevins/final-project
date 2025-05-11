@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieService } from '../../service/movie.service';
+import { UserDataService } from '../../service/user.service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 
@@ -7,24 +7,20 @@ import { CommonModule } from '@angular/common';
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css'],
-  imports: [MatCardModule, CommonModule]
+  standalone: true,
+  imports: [MatCardModule, CommonModule],
 })
 export class MovieListComponent implements OnInit {
-  interestedMovies: any[] = [];
   seenMovies: any[] = [];
-  userId: string = 'newuser1@gmail.com'; // Replace with dynamic user ID if needed
+  interestedMovies: any[] = [];
 
-  constructor(private movieService: MovieService) {}
+  constructor(private userDataService: UserDataService) {}
 
   ngOnInit(): void {
-    this.loadUserMovies();
-  }
-
-  loadUserMovies(): void {
-    this.movieService.getUserMovies(this.userId).subscribe({
-      next: (data) => {
-        this.interestedMovies = data.interestedMovies;
-        this.seenMovies = data.seenMovies;
+    this.userDataService.getUserMovies().subscribe({
+      next: (movies) => {
+        this.seenMovies = movies.filter(m => m.seen);
+        this.interestedMovies = movies.filter(m => m.interested);
       },
       error: (err) => {
         console.error('Error fetching user movies:', err);
