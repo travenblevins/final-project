@@ -27,19 +27,6 @@ export class MovieService {
       .pipe(map((response) => response.results));
   }
 
-  getUserMovies(userId: string): Observable<{ interestedMovies: any[]; seenMovies: any[] }> {
-    const token = localStorage.getItem('idToken'); // Retrieve the token from localStorage or another storage mechanism
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    return this.http.get<{ interestedMovies: any[]; seenMovies: any[] }>(
-      `http://localhost:4000/api/user/${userId}/movies`,
-      { headers }
-    );
-  }
-
   searchMovies(query: string): Observable<Movie[]> {
     const params = this.getDefaultParams().set('query', query);
 

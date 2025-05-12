@@ -5,12 +5,16 @@ import { MovieService } from '../../service/movie.service';
 import { CommonModule, Location } from '@angular/common';
 import { UserDataService } from '../../service/user.service';  // Assuming this is the service for handling user data
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-movie',
   templateUrl: './movie.component.html',
   styleUrls: ['./movie.component.css'],
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule]
 })
 export class MovieComponent implements OnInit {
   movieId!: string;
@@ -23,7 +27,7 @@ export class MovieComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private movieService: MovieService,
-    private userDataService: UserDataService,  // Assuming this service is responsible for user data
+    private userDataService: UserDataService,
     private location: Location
   ) {}
 

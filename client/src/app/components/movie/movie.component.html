@@ -1,24 +1,26 @@
-<div *ngIf="movieDetails">
-  <h2>{{ movieDetails.title }}</h2>
-<img [src]="movieDetails.poster_path" alt="{{ movieDetails.title }}" />
-<p>Runtime: {{ movieDetails.runtime }} min</p>
-</div>
 
-<button (click)="toggleSeen()">
-  {{ seen ? 'Mark as Unseen' : 'Mark as Seen' }}
-</button>
-<button (click)="toggleInterested()">
-  {{ interested ? 'Not Interested' : 'Interested' }}
-</button>
+<mat-card *ngIf="movieDetails" class="movie-container">
+  <button mat-stroked-button color="warn" (click)="goBack()">Back</button>
+  <h2 mat-typography>{{ movieDetails.title }}</h2>
+  <img [src]="'https://image.tmdb.org/t/p/w500' + movieDetails.poster_path" alt="{{ movieDetails.title }} poster" />
+  <p mat-body-1>Runtime: {{ movieDetails.runtime }} min</p>
+</mat-card>
 
-<label>
-  Rating:
-  <input type="number" [(ngModel)]="userRating" (change)="updateRating(userRating)" />
-</label>
+<mat-card class="actions">
+  <button mat-raised-button color="primary" (click)="toggleSeen()">
+    {{ seen ? 'Mark as Unseen' : 'Mark as Seen' }}
+    </button>
+    <button mat-raised-button color="accent" (click)="toggleInterested()">
+    {{ interested ? 'Not Interested' : 'Interested' }}
+  </button>
+</mat-card>
 
-<label>
-  Comment:
-  <textarea [(ngModel)]="userComment" (blur)="updateComment(userComment)"></textarea>
-</label>
+<mat-form-field appearance="fill" class="rating-field">
+  <mat-label>Rating</mat-label>
+  <input matInput type="number" [(ngModel)]="userRating" (change)="updateRating(userRating)" />
+</mat-form-field>
 
-<button (click)="goBack()">Back</button>
+<mat-form-field appearance="fill" class="comment-field">
+  <mat-label>Comment</mat-label>
+  <textarea matInput [(ngModel)]="userComment" (blur)="updateComment(userComment)"></textarea>
+</mat-form-field>

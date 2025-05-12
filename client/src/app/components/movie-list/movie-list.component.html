@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <div class="movie-grid">
-        <div *ngFor="let movie of interestedMovies" class="movie-card">
+        <div *ngFor="let movie of interestedMovies" class="movie-card" (click)="goToMovie(movie.id)">
           <h3>{{ movie.title }}</h3>
           <p>{{ movie.comment }}</p>
         </div>
@@ -19,7 +19,7 @@
     </mat-card-header>
     <mat-card-content>
       <div class="movie-grid">
-        <div *ngFor="let movie of seenMovies" class="movie-card">
+        <div *ngFor="let movie of seenMovies" class="movie-card" (click)="goToMovie(movie.id)">
           <h3>{{ movie.title }}</h3>
           <p>Rating: {{ movie.rating }}</p>
           <p>{{ movie.comment }}</p>

@@ -1,8 +1,21 @@
-<div class="login-form">
+<div class="login-container">
   <h2>Login</h2>
-  <input [(ngModel)]="email" type="email" placeholder="Email" />
-  <input [(ngModel)]="password" type="password" placeholder="Password" />
-  <button (click)="login()">Login</button>
-  <button (click)="googleLogin()">Login with Google</button>
-  <p *ngIf="error" style="color:red">{{ error }}</p>
+  <mat-card class="login-card">
+    <form class="login-form" (ngSubmit)="login()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" [(ngModel)]="email" type="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" [(ngModel)]="password" type="password" required />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </form>
+
+    <button mat-raised-button color="accent" (click)="googleLogin()">Login with Google</button>
+    <p *ngIf="error" style="color:red">{{ error }}</p>
+  </mat-card>
 </div>

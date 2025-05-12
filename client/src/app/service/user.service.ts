@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, setDoc, getDoc, collection, collectionData, DocumentData } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 export interface MovieData {
   title?: string;
@@ -64,6 +63,8 @@ export class UserDataService {
           collectionData(collectionRef, { idField: 'id' }).subscribe({
             next: (movies) => {
               observer.next(movies);
+              console.log("Fetched user movies:", movies);
+              
             },
             error: (err) => {
               observer.error('Error fetching user movies: ' + err);
