@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Movie } from '../interfaces/movies';
-import { environment } from '../environment';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class MovieService {
   private apiUrl = 'https://api.themoviedb.org/3';
   private apiKey = environment.TMDB_API_KEY;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private getDefaultParams(): HttpParams {
     return new HttpParams()
