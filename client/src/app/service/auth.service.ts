@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, getIdToken } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  User,
+  getIdToken,
+} from '@angular/fire/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -26,7 +33,11 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<void> {
-    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    );
     const token = await getIdToken(userCredential.user);
     localStorage.setItem('idToken', token); // Store the token in localStorage
   }

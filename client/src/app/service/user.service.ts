@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, setDoc, getDoc, collection, collectionData, DocumentData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  collectionData,
+  DocumentData,
+} from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 
@@ -12,10 +20,9 @@ export interface MovieData {
   updated?: Date;
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class UserDataService {
-  constructor(private afs: Firestore, private auth: AuthService) { }
+  constructor(private afs: Firestore, private auth: AuthService) {}
 
   // Save or update movie data for the user
   saveMovieData(movieId: string, data: MovieData): Promise<void> {
@@ -63,8 +70,7 @@ export class UserDataService {
           collectionData(collectionRef, { idField: 'id' }).subscribe({
             next: (movies) => {
               observer.next(movies);
-              console.log("Fetched user movies:", movies);
-              
+              console.log('Fetched user movies:', movies);
             },
             error: (err) => {
               observer.error('Error fetching user movies: ' + err);

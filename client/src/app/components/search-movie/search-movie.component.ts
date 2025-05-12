@@ -7,8 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MovieService } from '../../service/movie.service';
 import { Movie } from '../../interfaces/movies';
 import { RouterModule } from '@angular/router';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
-
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  query,
+  stagger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-search-movie',
@@ -24,13 +30,16 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
   templateUrl: './search-movie.component.html',
   styleUrl: './search-movie.component.css',
   animations: [
-  trigger('fadeInItem', [
-    transition(':enter', [
-      style({ opacity: 0, transform: 'translateY(20px)' }),
-      animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+    trigger('fadeInItem', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
     ]),
-  ]),
-],
+  ],
 })
 export class SearchMovieComponent implements OnInit {
   movies: Movie[] = [];
@@ -44,24 +53,23 @@ export class SearchMovieComponent implements OnInit {
   }
 
   onSearch() {
-  if (!this.searchText.trim()) {
-    this.loadTopRatedMovies();
-    return;
+    if (!this.searchText.trim()) {
+      this.loadTopRatedMovies();
+      return;
+    }
+
+    this.isLoading = true;
+    this.movieService.searchMovies(this.searchText).subscribe({
+      next: (movies: Movie[]) => {
+        this.movies = movies;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.movieService.handleError(err);
+        this.isLoading = false;
+      },
+    });
   }
-
-  this.isLoading = true;
-  this.movieService.searchMovies(this.searchText).subscribe({
-    next: (movies: Movie[]) => {
-      this.movies = movies;
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.movieService.handleError(err);
-      this.isLoading = false;
-    },
-  });
-}
-
 
   loadTopRatedMovies() {
     this.isLoading = true;

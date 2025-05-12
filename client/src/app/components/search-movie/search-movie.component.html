@@ -20,8 +20,8 @@
 
       <div class="movie-grid">
         <div *ngFor="let movie of movies" class="movie-results-card" [routerLink]="'/movie/' + movie.id" @fadeInItem>
-            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }} poster" />
-            <h3>{{ movie.title }}</h3>
+          <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }} poster" />
+          <h3>{{ movie.title }}</h3>
         </div>
       </div>
     </mat-card-content>

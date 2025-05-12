@@ -7,8 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-topnav',
   imports: [MatButtonModule, MatToolbarModule, RouterModule],
   templateUrl: './topnav.component.html',
-  styleUrl: './topnav.component.css'
+  styleUrl: './topnav.component.css',
 })
-export class TopnavComponent {
-
-}
+export class TopnavComponent {}

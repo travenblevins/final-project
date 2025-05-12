@@ -1,4 +1,3 @@
-
 <mat-card *ngIf="movieDetails" class="movie-container">
   <button mat-stroked-button color="warn" (click)="goBack()">Back</button>
   <h2 mat-typography>{{ movieDetails.title }}</h2>
@@ -9,8 +8,8 @@
 <mat-card class="actions">
   <button mat-raised-button color="primary" (click)="toggleSeen()">
     {{ seen ? 'Mark as Unseen' : 'Mark as Seen' }}
-    </button>
-    <button mat-raised-button color="accent" (click)="toggleInterested()">
+  </button>
+  <button mat-raised-button color="accent" (click)="toggleInterested()">
     {{ interested ? 'Not Interested' : 'Interested' }}
   </button>
 </mat-card>

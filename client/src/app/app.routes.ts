@@ -7,7 +7,7 @@ import { MovieComponent } from './components/movie/movie.component';
 import { BlankLayoutComponent } from './layouts/blank-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout.component';
 
-import { authGuard } from './auth.guard';  // Import the auth guard
+import { authGuard } from './auth.guard'; // Import the auth guard
 
 export const routes: Routes = [
   {
@@ -22,9 +22,21 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: 'search/movie', component: SearchMovieComponent, canActivate: [authGuard] },  // Protect with auth guard
-      { path: 'movie/list', component: MovieListComponent, canActivate: [authGuard] },         // Protect with auth guard
-      { path: 'movie/:id', component: MovieComponent, canActivate: [authGuard] },             // Protect with auth guard
+      {
+        path: 'search/movie',
+        component: SearchMovieComponent,
+        canActivate: [authGuard],
+      }, // Protect with auth guard
+      {
+        path: 'movie/list',
+        component: MovieListComponent,
+        canActivate: [authGuard],
+      }, // Protect with auth guard
+      {
+        path: 'movie/:id',
+        component: MovieComponent,
+        canActivate: [authGuard],
+      }, // Protect with auth guard
     ],
   },
   { path: '**', redirectTo: '' },

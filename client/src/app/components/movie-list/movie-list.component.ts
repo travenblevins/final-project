@@ -36,13 +36,18 @@ export class MovieListComponent implements OnInit {
 
       for (const userMovie of userMovies) {
         try {
-          const details = await this.movieService.getMovieDetails(userMovie.id).toPromise();
+          const details = await this.movieService
+            .getMovieDetails(userMovie.id)
+            .toPromise();
           const merged = { ...details, ...userMovie };
 
           if (userMovie.seen) seenList.push(merged);
           if (userMovie.interested) interestedList.push(merged);
         } catch (err) {
-          console.error(`Failed to fetch details for movie ${userMovie.id}:`, err);
+          console.error(
+            `Failed to fetch details for movie ${userMovie.id}:`,
+            err
+          );
         }
       }
 

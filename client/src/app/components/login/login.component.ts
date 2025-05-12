@@ -13,7 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
 })
 export class LoginComponent {
   email = '';
@@ -23,27 +30,28 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.email, this.password)
+    this.authService
+      .login(this.email, this.password)
       .then(() => {
         this.error = '';
         this.router.navigate(['/search/movie']);
         console.log('Login successful');
       })
-      .catch(err => {
+      .catch((err) => {
         this.error = err.message;
       });
   }
   googleLogin() {
-  this.authService.loginWithGoogle()
-    .then(() => {
-      this.error = '';
-              this.router.navigate(['/search/movie']);
+    this.authService
+      .loginWithGoogle()
+      .then(() => {
+        this.error = '';
+        this.router.navigate(['/search/movie']);
 
-      console.log('Google login successful');
-    })
-    .catch(err => {
-      this.error = err.message;
-    });
-}
-
+        console.log('Google login successful');
+      })
+      .catch((err) => {
+        this.error = err.message;
+      });
+  }
 }

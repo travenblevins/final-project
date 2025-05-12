@@ -3,7 +3,7 @@ import { Movie } from '../../interfaces/movies';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../service/movie.service';
 import { CommonModule, Location } from '@angular/common';
-import { UserDataService } from '../../service/user.service';  // Assuming this is the service for handling user data
+import { UserDataService } from '../../service/user.service'; // Assuming this is the service for handling user data
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +14,14 @@ import { MatCardModule } from '@angular/material/card';
   selector: 'app-movie',
   templateUrl: './movie.component.html',
   styleUrls: ['./movie.component.css'],
-  imports: [FormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule]
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
 })
 export class MovieComponent implements OnInit {
   movieId!: string;
@@ -55,17 +62,20 @@ export class MovieComponent implements OnInit {
   }
 
   loadUserData(): void {
-  this.userDataService.getMovieData(this.movieId).then((data) => {
-    if (data) {
-      this.seen = data['seen'] ?? false;
-      this.interested = data['interested'] ?? false;
-      this.userRating = data['rating'] ?? 0;
-      this.userComment = data['comment'] ?? '';
-    }
-  }).catch((error) => {
-    console.error('Error loading user data:', error);
-  });
-}
+    this.userDataService
+      .getMovieData(this.movieId)
+      .then((data) => {
+        if (data) {
+          this.seen = data['seen'] ?? false;
+          this.interested = data['interested'] ?? false;
+          this.userRating = data['rating'] ?? 0;
+          this.userComment = data['comment'] ?? '';
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading user data:', error);
+      });
+  }
 
   toggleSeen(): void {
     this.seen = !this.seen;
@@ -92,10 +102,11 @@ export class MovieComponent implements OnInit {
       seen: this.seen,
       interested: this.interested,
       rating: this.userRating,
-      comment: this.userComment
+      comment: this.userComment,
     };
 
-    this.userDataService.saveMovieData(this.movieId, movieData)
+    this.userDataService
+      .saveMovieData(this.movieId, movieData)
       .then(() => {
         console.log('User movie data updated successfully');
       })
